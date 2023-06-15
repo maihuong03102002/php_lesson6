@@ -2,7 +2,7 @@
 $servername = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'bai2_phpt4';
+$dbname = 'bai2_github';
 
 //kết nối tới MySQL server
 $dbh = mysqli_connect ($servername, $username, $password);
@@ -31,7 +31,7 @@ $sql_stmt = "CREATE TABLE IF NOT EXiSTS KHACHHANG (
   if (!$result){
       die ("lỗi khi tạo bảng". mysqli_error($dbh));
   } else {
-      echo "Đã tạo bảng khách hàng thành công</br>";
+      echo "1.Đã tạo bảng khách hàng thành công</br>";
   }
 // tạo bảng NHANVIEN
 $sql_stmt = "CREATE TABLE IF NOT EXiSTS NHANVIEN (
@@ -90,7 +90,8 @@ $sql_stmt = "CREATE TABLE IF NOT EXiSTS CTHD (
   } else {
       echo "Đã tạo bảng chi tiết đơn hàng thành công</br>";
   }
-// insert bảng Khách hàng
+
+  // insert bảng Khách hàng
 $sql_stmt = "INSERT INTO KHACHHANG (MAKH, HOTEN, DCHI, SODT, NGSINH, DOANHSO, NGDK)
 VALUES
 ('KH01','Nguyen Van A','731 Tran Hung Dao, Q5, TpHCM','08823451','10-22-1960','13,060,000','07-22-2006'),
@@ -237,7 +238,7 @@ VALUES
 ('1019','ST06','2'),
 ('1020','ST07','10'),
 ('1021','ST08','5'),
-('1021','TV01','7'),
+('1021','TV01','7',
 ('1021','TV02','10'),
 ('1020','ST07','1'),
 ('1020','ST04','6')";
@@ -247,3 +248,58 @@ if (!$result){
 } else {
     echo "Thêm Chi tiết hóa đơn thành công</br>";
 }
+
+
+//Thêm thuộc tính GHICHU  cho quan hệ SANPHAM
+$sql_stmt = "ALTER TABLE SANPHAM ADD GHICHU VARCHAR(20)";
+$result = mysqli_query($dbh,$sql_stmt);
+  if (!$result){
+      die ("lỗi khi thêm thuộc tính". mysqli_error($dbh));
+  } else {
+      echo "2.2.Đã thêm thuộc tính GHI CHÚ thành công</br>";
+  }
+
+//Thêm thuộc tính LOAIKH quan hệ KHACHHANG
+$sql_stmt = "ALTER TABLE KHACHHANG ADD LOAIKH TINYINT";
+$result = mysqli_query($dbh,$sql_stmt);
+  if (!$result){
+      die ("lỗi thêm thuộc tính". mysqli_error($dbh));
+  } else {
+      echo "2.3.Đã thêm thuộc tính LOẠI KHÁCH HÀNG thành công</br>";
+  }
+
+//Cập nhật tên “Nguyễn Văn B” cho dữ liệu Khách Hàng có mã là KH01
+$sql_stmt = "UPDATE KHACHHANG
+SET HOTEN = 'Nguyễn Văn B'
+WHERE MAKH = 'KH01'";
+$result = mysqli_query($dbh,$sql_stmt);
+if (!$result){
+    die ("lỗi khi cập nhật tên". mysqli_error($dbh));
+} else {
+    echo "2.4.Đã cập nhật tên thành công</br>";
+}
+
+//Cập nhật tên “Nguyễn Văn Hoan” cho dữ liệu Khách Hàng có mã là KH09 và năm đăng ký là 2007
+$sql_stmt = "UPDATE KHACHHANG
+SET HOTEN = 'Nguyễn Văn Hoan'
+WHERE MAKH = 'KH09' AND YEAR(NGDK) = 2007";
+$result = mysqli_query($dbh,$sql_stmt);
+if (!$result){
+    die ("lỗi khi cập nhật tên". mysqli_error($dbh));
+} else {
+    echo "2.5.Đã cập nhật tên và năm đăng ký thành công</br>";
+}
+
+
+//Xóa thuộc tính GHICHU trong quan hệ SANPHAM
+$sql_stmt = "ALTER TABLE SANPHAM DROP COLUMN GHICHU";
+$result = mysqli_query($dbh,$sql_stmt);
+if (!$result){
+	die ("lỗi khi xóa thuộc tính". mysqli_error($dbh));
+} else {
+	echo "Đã xóa thuộc tính thành công";
+}
+
+//Xoá tất cả dữ liệu khách hàng có năm sinh 1971
+
+//Xoá tất hoá đơn có mã KH = KH01
