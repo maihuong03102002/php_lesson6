@@ -2,7 +2,7 @@
 $servername = 'localhost';
 $username = 'root';
 $password = '';
-$dbname = 'hocphp_thu4';
+$dbname = 'bai1_github';
 
 //kết nối tới MySQL server
 $dbh = mysqli_connect ($servername, $username, $password);
@@ -76,6 +76,9 @@ if (!$result){
     die ("lỗi khi lấy thông tin". mysqli_error($dbh));
 } else {
     echo "Lấy email khách hàng thành công</br>";
+    foreach ($result as $row) {
+        echo "ID: " . $row["ID"] . "<br>". "Name: " . $row["NAME"] . "<br>". "Email: " . $row["EMAIL"] ."<br>". "Phone: " . $row["PHONE"] . "<br>";
+    }
 }
 
 //Tạo bảng "orders" (Thêm ràng buộc cho khoá ngoại delete cascade)
@@ -114,7 +117,10 @@ $result = mysqli_query($dbh,$sql_stmt);
 if (!$result){
     die ("lỗi khi xem đơn hàng". mysqli_error($dbh));
 } else {
-    echo "Xem đơn hàng của khách thành công</br>";
+    echo "Xem đơn hàng của khách ID à 3</br>";
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "ID: " . $row["ID"] ."<br>". "Customer ID: " . $row["CUSTOMER_ID"] ."<br>". "Total Amount: " . $row["TOTAL_AMOUNT"] ."<br>". "Order Date: " . $row["ORDER_DATE"] . "<br>";
+    }
 }
 
 //Lấy danh sách khách hàng và đơn hàng của họ
@@ -125,7 +131,10 @@ $result = mysqli_query($dbh,$sql_stmt);
 if (!$result){
     die ("lỗi khi lấy đanh sách và đơn hàng". mysqli_error($dbh));
 } else {
-    echo "Lấy danh sách và đơn hàng thành công</br>";
+    echo "Lấy danh sách khách hàng và đơn hàng </br>";
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "Customer ID: " . $row["ID"] ."<br>". "Customer Name: " . $row["NAME"] ."<br>". "Order ID: " . $row["ORDER_ID"] ."<br>". "Total Amount: " ."<br>". $row["TOTAL_AMOUNT"] . "Order Date: " ."<br>". $row["ORDER_DATE"] . "<br>";
+    }
 }
 
 //Lấy danh sách email của khách hàng

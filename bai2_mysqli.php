@@ -300,6 +300,4 @@ if (!$result){
 	echo "Đã xóa thuộc tính thành công";
 }
 
-//Xoá tất cả dữ liệu khách hàng có năm sinh 1971
 
-//Xoá tất hoá đơn có mã KH = KH01
